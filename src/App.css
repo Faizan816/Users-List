@@ -1,0 +1,27 @@
+/* h1{
+  color: white!important;
+  text-align: center;
+}
+
+:root {
+  background-color: black;
+  color: white;
+}
+
+h1,h2,h3,h4,h5,h6,p, li, ul{
+  color: white !important;
+}
+
+div, li {
+  background-color: black !important;
+} */
+
+.pagination-container {
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.pagination {
+  flex-wrap: nowrap;
+  margin-bottom: 0;
+}
