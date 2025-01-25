@@ -6,6 +6,7 @@ import { userStyles } from "../styles/users.styles";
 import { currentUser } from "../redux/userSlice";
 import { useNavigate } from "react-router";
 import { useSearchData } from "../hooks/useSearchData";
+import { TailSpin } from "react-loader-spinner";
 
 export default function UsersList() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ export default function UsersList() {
 
   const [data, setData] = useState();
 
-  const { fetchData } = useFetchData();
+  const { fetchData, isLoading, error } = useFetchData();
   const { searchData, isSearching, searchError } = useSearchData();
   const usersToDisplay = searchResults?.users || data?.users || [];
 
@@ -29,24 +30,7 @@ export default function UsersList() {
   };
 
   const handleSearch = async () => {
-    const searchValue = searchInputRef.current.value.trim();
-
-    if (!searchValue) {
-      setSearchResults(null);
-      setTotalPages(Math.ceil(data?.total / limit));
-      return;
-    }
-
-    try {
-      const results = await searchData(searchValue, {
-        limit,
-        skip: (currentPage - 1) * limit,
-      });
-      setSearchResults(results);
-      setTotalPages(0);
-    } catch (err) {
-      console.error("Search failed:", err);
-    }
+    loadData(1);
   };
 
   const handleKeyPress = (event) => {
@@ -58,23 +42,32 @@ export default function UsersList() {
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    loadData();
+    loadData(pageNumber);
   };
 
-  const loadData = async () => {
-    const result = await fetchData("users", {
-      limit,
-      skip: (currentPage - 1) * limit,
-    });
-    setData(result);
-    setTotalPages(Math.ceil(result.total / limit));
+  const loadData = async (pageNumber = currentPage) => {
+    const searchValue = searchInputRef.current.value.trim();
+    if (searchValue) {
+      const result = await searchData(searchValue, {
+        limit,
+        skip: (pageNumber - 1) * limit,
+      });
+      setSearchResults(result);
+      setTotalPages(Math.ceil(result.total / limit));
+    } else {
+      const result = await fetchData("users", {
+        limit,
+        skip: (pageNumber - 1) * limit,
+      });
+      setSearchResults(null);
+      setData(result);
+      setTotalPages(Math.ceil(result.total / limit));
+    }
   };
 
   useEffect(() => {
     loadData();
   }, []);
-
-  console.log(currentPage);
 
   return (
     <div>
@@ -120,15 +113,28 @@ export default function UsersList() {
           </tr>
         </thead>
         <tbody>
-          {isSearching ? (
+          {isLoading || isSearching ? (
             <tr>
               <td colSpan="6" className="text-center">
-                Loading...
+                <div className="d-flex justify-content-center">
+                  <TailSpin
+                    visible={true}
+                    height="50"
+                    width="50"
+                    color="#4fa94d"
+                    ariaLabel="tail-spin-loading"
+                    radius="1"
+                  />
+                </div>
               </td>
             </tr>
           ) : usersToDisplay.length > 0 ? (
             usersToDisplay.map((user) => (
-              <tr key={user.id} onClick={() => handleRowClick(user.id)}>
+              <tr
+                className="cursor-pointer"
+                key={user.id}
+                onClick={() => handleRowClick(user.id)}
+              >
                 <td>
                   <LazyLoad height={30}>
                     <img
