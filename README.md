@@ -18,7 +18,7 @@ This is a React application designed to list, search, and view user details usin
 
 ## Demo
 
-If deployed, the application link will be added here.
+**https://users-list-cmrs.vercel.app/**
 
 ---
 
