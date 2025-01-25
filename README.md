@@ -40,14 +40,14 @@ Follow these instructions to set up the project on your local machine:
 Ensure you have the following installed:
 
 - Node.js (v14 or later)
-- npm or yarn
+- npm
 
 ### Installation
 
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/user-management-app.git
+   git clone https://github.com/Faizan816/Users-List.git
    ```
 
 2. Navigate to project directory:
@@ -57,17 +57,26 @@ Ensure you have the following installed:
    ```
 
 3. Install dependencies:
+
    ```bash
    npm install
    ```
 
+---
+
 ## Running the Application
 
-Start the development server:
+1. Creating .env.local:
 
-```bash
-npm start
-```
+   - Create .env.local file in the root directory where package.json is located.
+
+   - Copy and paste **REACT_APP_API_URL=https://dummyjson.com** in .env.local and save it.
+
+2. Start the development server:
+
+   ```bash
+   npm start
+   ```
 
 The application will be accessible at `http://localhost:3000`
 
