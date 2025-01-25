@@ -131,9 +131,9 @@ export default function UsersList() {
           ) : usersToDisplay.length > 0 ? (
             usersToDisplay.map((user) => (
               <tr
-                className="cursor-pointer"
                 key={user.id}
                 onClick={() => handleRowClick(user.id)}
+                style={{ cursor: "pointer" }}
               >
                 <td>
                   <LazyLoad height={30}>
