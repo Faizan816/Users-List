@@ -25,7 +25,11 @@ export default function Pagination({
               key={index + 1}
               onClick={() => handlePageChange(index + 1)}
             >
-              <a className="page-link" href="#">
+              <a
+                className="page-link"
+                href="#"
+                onClick={(e) => e.preventDefault()}
+              >
                 {index + 1}
               </a>
             </li>
