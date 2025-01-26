@@ -71,7 +71,7 @@ export default function UsersList() {
 
   return (
     <div>
-      <h1 className="text-center">Users List</h1>
+      <h3 className="text-center mt-2">Users List</h3>
       <div className="col-12 mb-2">
         <div className="input-group">
           <input
@@ -101,67 +101,69 @@ export default function UsersList() {
         )}
       </div>
 
-      <table className="table table-light table-striped table-hover">
-        <thead>
-          <tr>
-            <th></th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Company</th>
-          </tr>
-        </thead>
-        <tbody>
-          {isLoading || isSearching ? (
+      <div className="table-responsive">
+        <table className="table table-light table-striped table-hover">
+          <thead>
             <tr>
-              <td colSpan="6" className="text-center">
-                <div className="d-flex justify-content-center">
-                  <TailSpin
-                    visible={true}
-                    height="50"
-                    width="50"
-                    color="#4fa94d"
-                    ariaLabel="tail-spin-loading"
-                    radius="1"
-                  />
-                </div>
-              </td>
+              <th></th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Company</th>
             </tr>
-          ) : usersToDisplay.length > 0 ? (
-            usersToDisplay.map((user) => (
-              <tr
-                key={user.id}
-                onClick={() => handleRowClick(user.id)}
-                style={{ cursor: "pointer" }}
-              >
-                <td>
-                  <LazyLoad height={30}>
-                    <img
-                      src={user.image}
-                      alt={user.firstName}
-                      style={userStyles.profileImage}
+          </thead>
+          <tbody>
+            {isLoading || isSearching ? (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  <div className="d-flex justify-content-center">
+                    <TailSpin
+                      visible={true}
+                      height="50"
+                      width="50"
+                      color="#4fa94d"
+                      ariaLabel="tail-spin-loading"
+                      radius="1"
                     />
-                  </LazyLoad>
+                  </div>
                 </td>
-                <td>{user.firstName}</td>
-                <td>{user.lastName}</td>
-                <td>{user.email}</td>
-                <td>{user.phone}</td>
-                <td>{user.company.name}</td>
               </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" className="text-center">
-                {searchResults !== null
-                  ? "No matching results found"
-                  : "No users available"}
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+            ) : usersToDisplay.length > 0 ? (
+              usersToDisplay.map((user) => (
+                <tr
+                  key={user.id}
+                  onClick={() => handleRowClick(user.id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <td>
+                    <LazyLoad height={30}>
+                      <img
+                        src={user.image}
+                        alt={user.firstName}
+                        style={userStyles.profileImage}
+                      />
+                    </LazyLoad>
+                  </td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                  <td>{user.company.name}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="6" className="text-center">
+                  {searchResults !== null
+                    ? "No matching results found"
+                    : "No users available"}
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
 
       {totalPages > 0 && (
         <nav aria-label="Page navigation" className="pagination-container">
