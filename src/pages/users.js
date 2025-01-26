@@ -7,6 +7,7 @@ import { currentUser } from "../redux/userSlice";
 import { useNavigate } from "react-router";
 import { useSearchData } from "../hooks/useSearchData";
 import { TailSpin } from "react-loader-spinner";
+import Pagination from "../components/pagination";
 
 export default function UsersList() {
   const dispatch = useDispatch();
@@ -45,6 +46,12 @@ export default function UsersList() {
     loadData(pageNumber);
   };
 
+  const handleInputClear = (e) => {
+    if (e.target.value === "") {
+      searchInputRef.current.blur();
+    }
+  };
+
   const loadData = async (pageNumber = currentPage) => {
     const searchValue = searchInputRef.current.value.trim();
     if (searchValue) {
@@ -80,6 +87,7 @@ export default function UsersList() {
             placeholder="Search users..."
             ref={searchInputRef}
             onBlur={handleSearch}
+            onChange={(e) => handleInputClear(e)}
             onKeyPress={handleKeyPress}
           />
           <button
@@ -165,48 +173,11 @@ export default function UsersList() {
         </table>
       </div>
 
-      {totalPages > 0 && (
-        <nav aria-label="Page navigation" className="pagination-container">
-          <ul className="pagination justify-content-center flex-wrap">
-            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-              <a
-                className="page-link"
-                href="#"
-                onClick={() => handlePageChange(currentPage - 1)}
-                tabIndex={currentPage === 1 ? -1 : undefined}
-              >
-                Previous
-              </a>
-            </li>
-            {Array.from({ length: totalPages }, (_, index) => (
-              <li
-                className={`page-item ${
-                  currentPage === index + 1 ? "active" : ""
-                }`}
-                key={index + 1}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                <a className="page-link" href="#">
-                  {index + 1}
-                </a>
-              </li>
-            ))}
-            <li
-              className={`page-item ${
-                currentPage === totalPages ? "disabled" : ""
-              }`}
-            >
-              <a
-                className="page-link"
-                href="#"
-                onClick={() => handlePageChange(currentPage + 1)}
-              >
-                Next
-              </a>
-            </li>
-          </ul>
-        </nav>
-      )}
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        handlePageChange={handlePageChange}
+      />
     </div>
   );
 }

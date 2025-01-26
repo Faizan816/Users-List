@@ -1,9 +1,9 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router";
-import UsersList from "./screens/users";
+import UsersList from "./pages/users";
 import store from "./redux/store";
 import { Provider } from "react-redux";
-import UserDetails from "./screens/user-details";
+import UserDetails from "./pages/user-details";
 import { Navigate } from "react-router";
 
 function App() {
