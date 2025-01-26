@@ -191,7 +191,7 @@ export default function UsersList() {
             ))}
             <li
               className={`page-item ${
-                currentPage === Math.ceil(totalPages / limit) ? "disabled" : ""
+                currentPage === totalPages ? "disabled" : ""
               }`}
             >
               <a

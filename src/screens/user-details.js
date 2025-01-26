@@ -18,7 +18,7 @@ export default function UserDetails() {
   return (
     data && (
       <div className="row justify-content-center  w-100">
-        <div className="card col-sm-12 col-md-6 col-lg-3 mt-4 p-0">
+        <div className="card col-sm-12 col-md-6 col-lg-3 mt-4 ms-4 p-0">
           <div className="card-header">Profile</div>
           <img src={data.image} className="card-img-top" alt="profile pic" />
           <div className="card-body">
@@ -45,7 +45,7 @@ export default function UserDetails() {
         </div>
 
         <div
-          className="card col-sm-12 col-md-6 col-lg-4 mt-4 ms-lg-4 p-0"
+          className="card col-sm-12 col-md-6 col-lg-4 mt-4 ms-4 p-0"
           style={{ height: "fit-content" }}
         >
           <div className="card-header">Company</div>
